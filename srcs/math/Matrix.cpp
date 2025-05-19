@@ -104,6 +104,30 @@ double Matrix::calculateDeterminant()
     return (determinant);
 }
 
+Matrix Matrix::createSubmatrix(char type, int row, int col)
+{
+    if (type == 'A')
+    {
+        std::vector<double> submatrix((rows - 1) * (cols - 1));
+        int sub_index = 0;
+        for (int r = 0; r < rows; r++)
+        {
+            for (int c = 0; c < cols; c++)
+            {
+                if (r != row && c != col)
+                {
+                    submatrix[sub_index++] = data[r * cols + c];
+                }
+            }
+        }
+        return (Matrix(rows - 1, cols - 1, submatrix));
+    }
+    else
+    {
+        throw std::invalid_argument("Invalid type for subMatrix");
+    }
+}
+
 void Matrix::printMatrix()
 {
     for (int i = 0; i < rows; i++)

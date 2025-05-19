@@ -26,6 +26,7 @@ class Matrix
 
     //helpers
     double calculateDeterminant();
+    Matrix createSubmatrix(char type, int row, int col);
     void printMatrix();
 
     private:
