@@ -18,20 +18,23 @@ class Matrix
     double getValOfPosition(int row, int col) const;
     int getRows() const;
     int getCols() const;
+    Matrix getCofactorMatrix();
     Matrix getIdentityMatrix();
+    Matrix getInverseMatrix();
     Matrix getTranspose();
-
     //setters
     void setValOfPosition(int row, int col, double value);
-
+    
     //helpers
     double calculateDeterminant();
     Matrix createSubmatrix(char type, int row, int col);
+    Matrix createInverseMatrix() const;
     void printMatrix();
-
+    
     private:
     double determinant;
     int rows;
+    bool isInvertible;
     int cols;
     std::vector<double> data;
 };

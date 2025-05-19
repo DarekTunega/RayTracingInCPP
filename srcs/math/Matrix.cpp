@@ -17,6 +17,10 @@ Matrix::Matrix(int rows, int cols, const std::vector<double> &data)
     {
         this->determinant = calculateDeterminant();
     }
+    if (determinant != 0)
+        isInvertible = true;
+    else
+        isInvertible = false;
 }
 
 Matrix::~Matrix()
@@ -45,11 +49,43 @@ int Matrix::getCols() const
     return (cols);
 }
 
+Matrix Matrix::getCofactorMatrix() {
+    if (rows != cols)
+        throw std::invalid_argument("Cofactor matrix is only defined for square matrices");
+
+    Matrix result(rows, cols, std::vector<double>(rows * cols, 0));
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            Matrix sub = createSubmatrix('A', i, j);
+            double minor = sub.calculateDeterminant();
+            double cofactor = pow(-1, i + j) * minor;
+            result.setValOfPosition(i, j, cofactor);
+        }
+    }
+    return result;
+}
+
 Matrix Matrix::getIdentityMatrix()
 {
     Matrix result(rows, cols, std::vector<double>(rows * cols, 0));
     for (int i = 0; i < rows; i++)
         result.setValOfPosition(i, i, 1);
+    return (result);
+}
+
+Matrix Matrix::getInverseMatrix()
+{
+    if(!isInvertible)
+        throw std::invalid_argument("Matrix is not invertible");
+   double determinant = calculateDeterminant();
+    Matrix cofactorMatrix = getCofactorMatrix();
+    Matrix adjugate = cofactorMatrix.getTranspose();
+    Matrix result(rows, cols, std::vector<double>(rows * cols, 0));
+    for (int i = 0; i < rows; i++)
+        for (int j = 0; j < cols; j++)
+            result.setValOfPosition(i, j, adjugate.getValOfPosition(i, j) / determinant);
+    
     return (result);
 }
 
@@ -61,6 +97,8 @@ Matrix Matrix::getTranspose()
             result.setValOfPosition(j, i, getValOfPosition(i, j));
     return (result);
 }
+
+
 
 //setters
 void Matrix::setValOfPosition(int row, int col, double value)
@@ -86,19 +124,9 @@ double Matrix::calculateDeterminant()
     }
     double result = 0;
     for (int j = 0; j < cols; j++) {
-        std::vector<double> submatrix((rows-1) * (cols-1));
-        int sub_index = 0;
-        
-        for (int r = 1; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                if (c != j) {
-                    submatrix[sub_index++] = data[r * cols + c];
-                }
-            }
-        }
-    Matrix sub(rows-1, cols-1, submatrix);
-    double cofactor = data[j] * pow(-1, j) * sub.calculateDeterminant();
-    result += cofactor;
+        Matrix sub = createSubmatrix('A', 0, j);
+        double cofactor = data[j] * pow(-1, j) * sub.calculateDeterminant();
+        result += cofactor;
     }
     determinant = result;
     return (determinant);
