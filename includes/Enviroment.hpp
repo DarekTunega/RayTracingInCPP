@@ -8,19 +8,19 @@
 
 class Enviroment
 {
-    public:
-        Enviroment();
-        Enviroment(const Tuple &gravity, const Tuple &wind);
-        ~Enviroment() = default;
-        
-        //getters
-        Tuple getGravity() const { return (gravity); }
-        Tuple getWind() const { return (wind); }
+	public:
+	Enviroment();
+	Enviroment(const Tuple &gravity, const Tuple &wind);
+	~Enviroment() = default;
 
-        
-    private:
-        Tuple gravity;
-        Tuple wind;
+	//getters
+	Tuple getGravity() const { return (gravity); }
+	Tuple getWind() const { return (wind); }
+
+
+	private:
+	Tuple gravity;
+	Tuple wind;
 };
 
 #endif

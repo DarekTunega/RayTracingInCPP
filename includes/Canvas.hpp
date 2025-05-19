@@ -9,25 +9,25 @@
 
 class Canvas
 {
-    public:
-    Canvas();
-    Canvas(size_t width, size_t height);
-    ~Canvas() = default;
-    
-    //getters
-    size_t getWidth() const { return (width); }
-    size_t getHeight() const { return (height); }
-    Color getPixel(size_t x, size_t y) const;
-    
-    //helpers
-    void WritePixel(size_t x, size_t y, const Color &color);
-    void WritePPM(const std::string &filename) const;
-    
-    Color **canvas;
-    
-    private:
-    size_t width;
-    size_t height;
+	public:
+	Canvas();
+	Canvas(size_t width, size_t height);
+	~Canvas() = default;
+
+	//getters
+	size_t getWidth() const { return (width); }
+	size_t getHeight() const { return (height); }
+	Color getPixel(size_t x, size_t y) const;
+
+	//helpers
+	void WritePixel(size_t x, size_t y, const Color &color);
+	void WritePPM(const std::string &filename) const;
+
+	Color **canvas;
+
+	private:
+	size_t width;
+	size_t height;
 };
 
 //helper functions
