@@ -12,8 +12,6 @@ enum class TupleType {
 class Tuple
 {
 	public:
-	Tuple();
-	Tuple(double x, double y, double z, double w);
 
 	//getters
 	double getX(void) const;
@@ -28,8 +26,6 @@ class Tuple
 	void setX(double x);
 	void setY(double y);
 	void setZ(double z);
-	void setW(double w);
-	void setType(TupleType type);
 
 	//helpers
 	void printTuple(void) const;
@@ -46,6 +42,12 @@ class Tuple
 	double z;
 	double w;
 	TupleType type;
+	void setType(TupleType type);
+	void setW(double w);
+
+	protected:
+	Tuple();
+	Tuple(double x, double y, double z, double w);
 };
 
 // kinda constructors

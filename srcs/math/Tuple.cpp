@@ -6,7 +6,7 @@ Tuple::Tuple()
 	y = 0.0;
 	z = 0.0;
 	w = 0.0;
-	type = TupleType::Point;
+	type = TupleType::Vector;
 }
 
 Tuple::Tuple(double x, double y, double z, double w)
@@ -14,8 +14,18 @@ Tuple::Tuple(double x, double y, double z, double w)
 	this->x = x;
 	this->y = y;
 	this->z = z;
-	this->w = w;
-	type = TupleType::Point;
+	if(w == 1.0 || w == 1)
+	{
+		this->type = TupleType::Point;
+		this->w = 1.0;
+	}
+	else if(w == 0.0 || w == 0)
+	{
+		this->type = TupleType::Vector;
+		this->w = 0.0;
+	}
+	else
+		throw std::invalid_argument("W index of tuple does not exist.");
 }
 
 //getters
@@ -82,14 +92,31 @@ void Tuple::setZ(double z)
 	this->z = z;
 }
 
-void Tuple::setW(double w)
+void Tuple::setType(TupleType newType)
 {
-	this->w = w;
+	this->type = newType;
+	if (newType == TupleType::Point)
+		this->w = 1.0;
+	else if (newType == TupleType::Vector)
+		this->w = 0.0;
+	else
+		throw std::invalid_argument("Tuple type does not exist.");
 }
 
-void Tuple::setType(TupleType type)
+void Tuple::setW(double newW)
 {
-	this->type = type;
+	if(newW == 1.0 || newW == 1)
+	{
+		this->type = TupleType::Point;
+		this->w = 1.0;
+	}
+	else if(newW == 0.0 || newW == 0)
+	{
+		this->type = TupleType::Vector;
+		this->w = 0.0;
+	}
+	else
+		throw std::invalid_argument("W index of tuple does not exist.");
 }
 
 //helpers
