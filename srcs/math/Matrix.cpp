@@ -25,6 +25,7 @@ Matrix::Matrix(int rows, int cols, const std::vector<double> &data)
 
 Matrix::~Matrix()
 {
+	std::cout << "Matrix destructor called" << std::endl;
 	this->data.clear();
 }
 
@@ -49,24 +50,26 @@ int Matrix::getCols() const
 	return (cols);
 }
 
-Matrix Matrix::getCofactorMatrix() {
+Matrix Matrix::getCofactorMatrix() const
+{
 	if (rows != cols)
 		throw std::invalid_argument("Cofactor matrix is only defined for square matrices");
 
-	Matrix result(rows, cols, std::vector<double>(rows * cols, 0));
+	Matrix temp(rows, cols, std::vector<double>(rows * cols, 0));
 
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
 			Matrix sub = createSubmatrix('A', i, j);
 			double minor = sub.calculateDeterminant();
 			double cofactor = pow(-1, i + j) * minor;
-			result.setValOfPosition(i, j, cofactor);
+			temp.setValOfPosition(i, j, cofactor);
 		}
 	}
+	Matrix result = temp.createDuplicateMatrix();
 	return (result);
 }
 
-Matrix Matrix::getIdentityMatrix()
+Matrix Matrix::getIdentityMatrix() const
 {
 	Matrix temp(rows, cols, std::vector<double>(rows * cols, 0));
 	for (int i = 0; i < rows; i++)
@@ -75,7 +78,7 @@ Matrix Matrix::getIdentityMatrix()
 	return (result);
 }
 
-Matrix Matrix::getInverseMatrix()
+Matrix Matrix::getInverseMatrix() const
 {
 	if(!isInvertible)
 		throw std::invalid_argument("Matrix is not invertible");
@@ -90,12 +93,13 @@ Matrix Matrix::getInverseMatrix()
 	return (result);
 }
 
-Matrix Matrix::getTranspose()
+Matrix Matrix::getTranspose() const
 {
-	Matrix result(cols, rows, std::vector<double>(cols * rows, 0));
+	Matrix temp(cols, rows, std::vector<double>(cols * rows, 0));
 	for (int i = 0; i < rows; i++)
 		for (int j = 0; j < cols; j++)
-			result.setValOfPosition(j, i, getValOfPosition(i, j));
+			temp.setValOfPosition(j, i, getValOfPosition(i, j));
+	Matrix result = temp.createDuplicateMatrix();
 	return (result);
 }
 
@@ -106,20 +110,17 @@ void Matrix::setValOfPosition(int row, int col, double value)
 }
 
 //helpers
-double Matrix::calculateDeterminant()
+double Matrix::calculateDeterminant() const
 {
 	if (rows != cols) {
 		throw std::invalid_argument("Cannot calculate determinant of non-square matrix");
-		determinant = 0;
-		return (determinant);
+		return (0);
 	}
 	if (rows == 1) {
-		determinant = data[0];
-		return (determinant);
+		return (data[0]);
 	}
 	if (rows == 2) {
-		determinant = data[0] * data[3] - data[1] * data[2];
-		return (determinant);
+		return (data[0] * data[3] - data[1] * data[2]);
 	}
 	double result = 0;
 	for (int j = 0; j < cols; j++) {
@@ -127,8 +128,7 @@ double Matrix::calculateDeterminant()
 		double cofactor = data[j] * pow(-1, j) * sub.calculateDeterminant();
 		result += cofactor;
 	}
-	determinant = result;
-	return (determinant);
+	return (result);
 }
 
 Matrix Matrix::createDuplicateMatrix() const
@@ -136,7 +136,7 @@ Matrix Matrix::createDuplicateMatrix() const
 	return (Matrix(rows, cols, data));
 }
 
-Matrix Matrix::createSubmatrix(char type, int row, int col)
+Matrix Matrix::createSubmatrix(char type, int row, int col) const
 {
 	if (type == 'A')
 	{
@@ -171,7 +171,7 @@ void Matrix::printMatrix()
 }
 
 //overload operators
-bool operator==(Matrix& m1, Matrix& m2)
+bool operator==(const Matrix& m1, const Matrix& m2)
 {
 	if (m1.getRows() != m2.getRows() || m1.getCols() != m2.getCols())
 		return (false);
@@ -182,7 +182,7 @@ bool operator==(Matrix& m1, Matrix& m2)
 	return (true);
 }
 
-Matrix operator*(Matrix& m1, Matrix& m2)
+Matrix operator*(const Matrix& m1, const Matrix& m2)
 {
 	if (m1.getCols() != m2.getRows())
 		throw std::invalid_argument("Cannot multiply matrices of incompatible sizes");
@@ -194,7 +194,7 @@ Matrix operator*(Matrix& m1, Matrix& m2)
 	return (result);
 }
 
-Matrix operator*(Matrix& m, Tuple& tuple)
+Matrix operator*(const Matrix& m, const Tuple& tuple)
 {
 	if (m.getCols() != 4)
 		throw std::invalid_argument("Cannot multiply matrix with tuple of incompatible size");
