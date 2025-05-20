@@ -9,7 +9,6 @@
 class Matrix
 {
 	public:
-	Matrix();
 	Matrix(int rows, int cols, const std::vector<double> &data);
 	~Matrix();
 
@@ -18,33 +17,35 @@ class Matrix
 	double getValOfPosition(int row, int col) const;
 	int getRows() const;
 	int getCols() const;
-	Matrix getCofactorMatrix();
-	Matrix getIdentityMatrix();
-	Matrix getInverseMatrix();
-	Matrix getTranspose();
+	Matrix getCofactorMatrix() const;
+	Matrix getIdentityMatrix() const;
+	Matrix getInverseMatrix() const;
+	Matrix getTranspose() const;
 	//setters
 	void setValOfPosition(int row, int col, double value);
 
 	//helpers
-	double calculateDeterminant();
+	double calculateDeterminant() const;
 	Matrix createDuplicateMatrix() const;
-	Matrix createSubmatrix(char type, int row, int col);
+	Matrix createSubmatrix(char type, int row, int col) const;
 	Matrix createInverseMatrix() const;
 	void printMatrix();
 
 	private:
+	Matrix();
 	double determinant;
 	int rows;
+	int hehe;
 	bool isInvertible;
 	int cols;
 	std::vector<double> data;
 };
 
 // overload operators
-bool operator==(Matrix &m1, Matrix &m2);
-Matrix operator*(Matrix &m1, Matrix &m2);
-Matrix operator*(Matrix &m, Tuple &tuple);
-Matrix operator+(Matrix &m1, Matrix &m2);
-Matrix operator-(Matrix &m1, Matrix &m2);
+bool operator==(const Matrix &m1, const Matrix &m2);
+Matrix operator*(const Matrix &m1, const Matrix &m2);
+Matrix operator*(const Matrix &m, const Tuple &tuple);
+Matrix operator+(const Matrix &m1, const Matrix &m2);
+Matrix operator-(const Matrix &m1, const Matrix &m2);
 
 #endif

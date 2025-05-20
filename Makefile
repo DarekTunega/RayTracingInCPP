@@ -1,6 +1,6 @@
 NAME = raytracer
-CFLAGS = -Wall -Wextra -Werror 
-CC = g++
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP
+CXX = g++
 
 SRC_DIRS = srcs srcs/rendering srcs/math srcs/physics
 INCLUDE_PATH = includes/
@@ -18,6 +18,7 @@ SRC = $(addprefix srcs/, $(MAIN_SRC)) \
 OBJ_PATH = objects/
 OBJ = $(notdir $(SRC:.cpp=.o))
 OBJS = $(addprefix $(OBJ_PATH), $(OBJ))
+DEPS = $(OBJS:.o=.d)
 
 INC_FLAGS = $(addprefix -I, $(INCLUDE_PATH) $(SRC_DIRS))
 
@@ -28,11 +29,11 @@ all: $(NAME)
 $(OBJ_PATH)%.o: %.cpp
 	@mkdir -p $(OBJ_PATH)
 	@echo "Compiling $< to $@"
-	$(CC) $(CFLAGS) $(INC_FLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(INC_FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	@echo "Linking $@"
-	$(CC) $(CFLAGS) -o $@ $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJS)
 	@echo "Done"
 
 clean:
@@ -46,4 +47,5 @@ fclean: clean
 
 re: fclean all
 
+-include $(DEPS)
 .PHONY: all clean fclean re
