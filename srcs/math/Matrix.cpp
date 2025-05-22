@@ -1,6 +1,31 @@
 #include "Matrix.hpp"
 #include <stdexcept>
 
+Matrix Matrix::translation(double x, double y, double z)
+{
+	std::vector<double> data =
+	{
+		1, 0, 0, x,
+		0, 1, 0, y,
+		0, 0, 1, z,
+		0, 0, 0, 1
+	};
+	return Matrix(4, 4, data);
+}
+
+Matrix Matrix::scaling(double x, double y, double z)
+{
+	std::vector<double> data =
+	{
+		x, 0, 0, 0,
+		0, y, 0, 0,
+		0, 0, z, 0,
+		0, 0, 0, 1
+	};
+	return Matrix(4, 4, data);
+}
+
+
 Matrix::Matrix()
 {
 	this->rows = 0;
@@ -25,7 +50,6 @@ Matrix::Matrix(int rows, int cols, const std::vector<double> &data)
 
 Matrix::~Matrix()
 {
-	std::cout << "Matrix destructor called" << std::endl;
 	this->data.clear();
 }
 
@@ -198,7 +222,7 @@ Tuple operator*(const Matrix& m, const Tuple& tuple)
 {
 	if (m.getCols() != 4)
 		throw std::invalid_argument("Cannot multiply matrix with tuple of incompatible size");
-		double x = 0, y = 0, z = 0, w = 0;
+	double x = 0, y = 0, z = 0, w = 0;
 	for (int i = 0; i < m.getRows(); i++) {
 		for (int j = 0; j < m.getCols(); j++) {
 			double val = m.getValOfPosition(i, j) * tuple.getByIndex(j);

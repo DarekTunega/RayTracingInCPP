@@ -6,11 +6,18 @@
 #include <cmath>
 #include "Tuple.hpp"
 
+constexpr double PI = 3.14159265358979323846;
+
 class Matrix
 {
 	public:
+	static Matrix translation(double x, double y, double z);
+	static Matrix scaling(double x, double y, double z);
+	static Matrix rotation(double xRot, double yRot, double zRot);
 	Matrix(int rows, int cols, const std::vector<double> &data);
 	~Matrix();
+
+
 
 	//getters
 	double getDeterminant() const;
@@ -28,7 +35,6 @@ class Matrix
 	double calculateDeterminant() const;
 	Matrix createDuplicateMatrix() const;
 	Matrix createSubmatrix(char type, int row, int col) const;
-	Matrix createInverseMatrix() const;
 	void printMatrix();
 
 	private:

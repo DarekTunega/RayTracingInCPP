@@ -2,8 +2,9 @@
 #define TUPLE_HPP
 #include <cmath>
 #include <iostream>
-#define EPSILON 0.00001
 
+
+constexpr double EPSILON = 0.00001;
 enum class TupleType {
 	Point,
 	Vector
