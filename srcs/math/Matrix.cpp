@@ -194,13 +194,25 @@ Matrix operator*(const Matrix& m1, const Matrix& m2)
 	return (result);
 }
 
-Matrix operator*(const Matrix& m, const Tuple& tuple)
+Tuple operator*(const Matrix& m, const Tuple& tuple)
 {
 	if (m.getCols() != 4)
 		throw std::invalid_argument("Cannot multiply matrix with tuple of incompatible size");
-	Matrix result(m.getRows(), 1, std::vector<double>(m.getRows(), 0));
-	for (int i = 0; i < m.getRows(); i++)
-		for (int j = 0; j < m.getCols(); j++)
-			result.setValOfPosition(i, 0, result.getValOfPosition(i, 0) + m.getValOfPosition(i, j) * tuple.getByIndex(j));
-	return (result);
+		double x = 0, y = 0, z = 0, w = 0;
+	for (int i = 0; i < m.getRows(); i++) {
+		for (int j = 0; j < m.getCols(); j++) {
+			double val = m.getValOfPosition(i, j) * tuple.getByIndex(j);
+			switch(i) {
+				case 0: x += val; break;
+				case 1: y += val; break;
+				case 2: z += val; break;
+				case 3: w += val; break;
+			}
+		}
+	}
+	if (w == 1.0)
+		return (point(x, y, z));
+	else
+		return (vector(x, y, z));
 }
+

@@ -73,6 +73,13 @@ double Tuple::getMagnitude(void) const
 
 TupleType Tuple::getType(void) const
 {
+	std::cout << "Tuple type: ";
+	if (type == TupleType::Point)
+		std::cout << "Point" << std::endl;
+	else if (type == TupleType::Vector)
+		std::cout << "Vector" << std::endl;
+	else
+		std::cout << "Unknown type" << std::endl;
 	return (type);
 }
 
@@ -156,7 +163,6 @@ Tuple vector(double x, double y, double z)
 	vector.setY(y);
 	vector.setZ(z);
 	vector.setW(0.0);
-	vector.setType(TupleType::Vector);
 	return (vector);
 }
 
@@ -167,7 +173,6 @@ Tuple point(double x, double y, double z)
 	point.setY(y);
 	point.setZ(z);
 	point.setW(1.0);
-	point.setType(TupleType::Point);
 	return (point);
 }
 

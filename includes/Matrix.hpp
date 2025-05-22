@@ -44,7 +44,7 @@ class Matrix
 // overload operators
 bool operator==(const Matrix &m1, const Matrix &m2);
 Matrix operator*(const Matrix &m1, const Matrix &m2);
-Matrix operator*(const Matrix &m, const Tuple &tuple);
+Tuple operator*(const Matrix &m, const Tuple &tuple);
 Matrix operator+(const Matrix &m1, const Matrix &m2);
 Matrix operator-(const Matrix &m1, const Matrix &m2);
 
