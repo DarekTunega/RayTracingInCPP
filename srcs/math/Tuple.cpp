@@ -129,7 +129,8 @@ void Tuple::setW(double newW)
 //helpers
 void Tuple::printTuple(void) const
 {
-	std::cout << "Tuple: (" << x << ", " << y << ", " << z << ", " << w << ")" << std::endl;
+	auto pretty = [](double v) { return (std::abs(v) < 1e-10 ? 0.0 : v); };
+	std::cout << "Tuple: (" << pretty(x) << ", " << pretty(y) << ", " << pretty(z) << ", of type: " << "point" << ")" << std::endl;
 }
 
 Tuple Tuple::normalize(void) const

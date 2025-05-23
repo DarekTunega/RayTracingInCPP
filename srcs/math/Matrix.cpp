@@ -25,6 +25,57 @@ Matrix Matrix::scaling(double x, double y, double z)
 	return Matrix(4, 4, data);
 }
 
+Matrix Matrix::rotateX(double degrees)
+{
+	double radians = toRadians(degrees);
+	std::vector<double> data =
+	{
+		1, 0, 0, 0,
+		0, cos(radians), -sin(radians), 0,
+		0, sin(radians), cos(radians), 0,
+		0, 0, 0, 1
+	};
+	return Matrix(4, 4, data);
+}
+
+Matrix Matrix::rotateY(double degrees)
+{
+	double radians = toRadians(degrees);
+	std::vector<double> data =
+	{
+		cos(radians), 0, sin(radians),0,
+		0,			  1, 0,			  0,
+		-sin(radians),0, cos(radians),0,
+		0,			  0, 0,			  1
+	};
+	return Matrix(4, 4, data);
+}
+
+Matrix Matrix::rotateZ(double degrees)
+{
+	double radians = toRadians(degrees);
+	std::vector<double> data =
+	{
+		cos(radians), -sin(radians), 0, 0,
+		sin(radians), cos(radians),  0, 0,
+		0,			  0,			 1, 0,
+		0,			  0,			 0, 1
+	};
+	return Matrix(4, 4, data);
+}
+
+Matrix Matrix::shearing(double xy, double xz, double yx, double yz, double zx, double zy)
+{
+	std::vector<double> data =
+	{
+		1, xy, xz, 0,
+		yx, 1, yz, 0,
+		zx, zy, 1, 0,
+		0, 0, 0, 1
+	};
+	return Matrix(4, 4, data);
+}
+//default constructor
 
 Matrix::Matrix()
 {
@@ -192,6 +243,16 @@ void Matrix::printMatrix()
 			std::cout << this->getValOfPosition(i, j) << " ";
 		std::cout << std::endl;
 	}
+}
+
+double toRadians(double degrees)
+{
+	return (degrees * PI / 180);
+}
+
+double toDegrees(double radians)
+{
+	return (radians * 180 / PI);
 }
 
 //overload operators

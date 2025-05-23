@@ -13,7 +13,10 @@ class Matrix
 	public:
 	static Matrix translation(double x, double y, double z);
 	static Matrix scaling(double x, double y, double z);
-	static Matrix rotation(double xRot, double yRot, double zRot);
+	static Matrix rotateX(double degrees);
+	static Matrix rotateY(double degrees);
+	static Matrix rotateZ(double degrees);
+	static Matrix shearing(double xy, double xz, double yx, double yz, double zx, double zy);
 	Matrix(int rows, int cols, const std::vector<double> &data);
 	~Matrix();
 
@@ -46,6 +49,10 @@ class Matrix
 	int cols;
 	std::vector<double> data;
 };
+
+// helper functions
+double toRadians(double degrees);
+double toDegrees(double radians);
 
 // overload operators
 bool operator==(const Matrix &m1, const Matrix &m2);
