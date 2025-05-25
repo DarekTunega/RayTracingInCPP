@@ -7,8 +7,9 @@ INCLUDE_PATH = includes/
 
 MAIN_SRC = main.cpp
 MATH_SRC = Tuple.cpp Matrix.cpp
-RENDERING_SRC = Canvas.cpp Color.cpp
+RENDERING_SRC = Canvas.cpp Color.cpp Ray.cpp
 PHYSICS_SRC = Enviroment.cpp Projectile.cpp
+
 
 SRC = $(addprefix srcs/, $(MAIN_SRC)) \
       $(addprefix srcs/physics/, $(PHYSICS_SRC)) \

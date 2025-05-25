@@ -7,7 +7,7 @@
 #include "Tuple.hpp"
 #include "Matrix.hpp"
 #include <ctime>
-
+#include "Ray.hpp"
 
 void testingIfInvertedMatrixIsCorrect()
 {
@@ -52,7 +52,7 @@ int getCurrentHour()
 {
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
-	return ltm->tm_hour;
+	return ltm->tm_hour % 12;
 }
 
 int getCurrentMinute()
@@ -160,7 +160,7 @@ void drawClock()
 		Matrix rotate = Matrix::rotateZ(i * 30);
 		hour = rotate * (hour - center) + center;
 		drawBigDot(canvas, static_cast<size_t>(hour.getX()), static_cast<size_t>(hour.getY()), white);
-		if(getCurrentHour() % 12 == i)
+		if(getCurrentHour() == i)
 			drawLine(canvas, x, static_cast<size_t>(hour.getX()), y, static_cast<size_t>(hour.getY() + 10), white, true);
 	}
 	for (int i = 0; i < 60; i++)
@@ -181,17 +181,13 @@ int main()
 {
 	//TestingDrawingPixelsInPPM();
 	//testingIfInvertedMatrixIsCorrect();
-	// Tuple teapod = point(0, 0, 0);
-	// Matrix rotation = Matrix::rotateX(toDegrees(PI / 2));
-	// teapod = rotation * teapod;
-	// Matrix translation = Matrix::scaling(5,5,5);
-	// teapod = translation * teapod;
-	// Matrix translation2 = Matrix::translation(10, 5, 7);
-	// teapod = translation2 * teapod;
-	// std::cout << "Teapod position: ";
-	// teapod.printTuple();
 	drawClock();
-	std::cout << "Current hour: " << getCurrentHour() % 12 << std::endl;
-
+	// std::cout << "Current hour: " << getCurrentHour() << std::endl;
+	Tuple direction = vector(2,-2,4);
+	 Tuple origin = point(2,3,4);
+	 Tuple dir = vector(1,0,0);
+	Ray aFuckingRay = Ray(origin,dir);
+	Tuple newPosition = aFuckingRay.rayPosition(-1);
+	newPosition.printTuple();
 	return (0);
 }
