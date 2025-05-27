@@ -2,19 +2,21 @@ NAME = raytracer
 CXXFLAGS = -Wall -Wextra -Werror -MMD -MP
 CXX = g++
 
-SRC_DIRS = srcs srcs/rendering srcs/math srcs/physics
+SRC_DIRS = srcs srcs/rendering srcs/math srcs/physics srcs/3D
 INCLUDE_PATH = includes/
 
 MAIN_SRC = main.cpp
 MATH_SRC = Tuple.cpp Matrix.cpp
 RENDERING_SRC = Canvas.cpp Color.cpp Ray.cpp
 PHYSICS_SRC = Enviroment.cpp Projectile.cpp
+3D_SRC = Sphere.cpp Shape.cpp
 
 
 SRC = $(addprefix srcs/, $(MAIN_SRC)) \
       $(addprefix srcs/physics/, $(PHYSICS_SRC)) \
       $(addprefix srcs/math/, $(MATH_SRC)) \
-      $(addprefix srcs/rendering/, $(RENDERING_SRC))
+      $(addprefix srcs/rendering/, $(RENDERING_SRC)) \
+      $(addprefix srcs/3D/, $(3D_SRC))
 
 OBJ_PATH = objects/
 OBJ = $(notdir $(SRC:.cpp=.o))

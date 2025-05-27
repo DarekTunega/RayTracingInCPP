@@ -73,13 +73,6 @@ double Tuple::getMagnitude(void) const
 
 TupleType Tuple::getType(void) const
 {
-	std::cout << "Tuple type: ";
-	if (type == TupleType::Point)
-		std::cout << "Point" << std::endl;
-	else if (type == TupleType::Vector)
-		std::cout << "Vector" << std::endl;
-	else
-		std::cout << "Unknown type" << std::endl;
 	return (type);
 }
 

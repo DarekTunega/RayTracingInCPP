@@ -8,6 +8,7 @@
 #include "Matrix.hpp"
 #include <ctime>
 #include "Ray.hpp"
+#include "Sphere.hpp"
 
 void testingIfInvertedMatrixIsCorrect()
 {
@@ -181,13 +182,22 @@ int main()
 {
 	//TestingDrawingPixelsInPPM();
 	//testingIfInvertedMatrixIsCorrect();
-	drawClock();
-	// std::cout << "Current hour: " << getCurrentHour() << std::endl;
-	Tuple direction = vector(2,-2,4);
-	 Tuple origin = point(2,3,4);
-	 Tuple dir = vector(1,0,0);
-	Ray aFuckingRay = Ray(origin,dir);
-	Tuple newPosition = aFuckingRay.rayPosition(-1);
-	newPosition.printTuple();
+	//drawClock();
+	Tuple origin = point(0,0,5);
+	Tuple direction = vector(0,0,1);
+	Ray ray(origin,direction);
+	Tuple center = point(0,0,0);
+	Sphere sphere(center,1);
+	std::vector<t_intersection> intersections = sphere.calculateIntersection(ray);
+	std::cout << "Intersections: " << intersections.size() << std::endl;
+	Sphere s2(center,2);
+	for(size_t i = 0; i < intersections.size(); i++)
+	{
+		std::cout << "Intersection " << i << ": " << intersections[i].t << std::endl;
+		std::cout << "Intersection " << i << ": " << intersections[i].shape->printShapeType() << "ID: " << intersections[i].shape->getId() << std::endl;
+	}
+	std::cout << "Sphere ID: " << sphere.getId() << std::endl;
+	std::cout << "Sphere ID: " << s2.getId() << std::endl;
+
 	return (0);
 }

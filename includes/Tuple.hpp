@@ -75,4 +75,4 @@ Tuple operator*(const Tuple &a, const double &b);
 
 
 
-#endif // TUPLE_HPP
+#endif
